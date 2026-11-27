@@ -4,6 +4,8 @@ Calculadora em português do Juvenile Arthritis Disease Activity Score para resi
 
 ## Estrutura
 - `index.html`: página única (HTML + CSS + JS, sem dependências nem build, só a fonte do Google Fonts). Abre direto no navegador. Mesmo visual do JDMAI (`../jdmai`).
+- Layout: tela ≥ 1000 px = duas colunas (boneco à esquerda; subtipo, pais, laboratório, médico, resultado e Wallace à direita). Tela menor (celular, tablet em pé) = uma coluna na ordem do atendimento. Faixa fixa no topo com cJADAS-10 e JADAS-10 em qualquer largura. Ideias aproveitadas de rheumomar.github.io/JADAS: subtipo em dois botões no topo, cartão de resultado com a classificação colorida, caixa com o texto do prontuário.
+- Na página inicial, a AIJ deve listar JADAS, sJADAS e JSpADA (os dois últimos "em breve").
 - Será publicada em `reumatopedhias/jadas` → https://reumatopedhias.github.io/jadas/ e ligada à página inicial (`../reumatopedhias-inicio`, ver o CLAUDE.md de lá).
 
 ## Lógica do cálculo (não alterar sem avisar e justificar)
@@ -11,6 +13,8 @@ Calculadora em português do Juvenile Arthritis Disease Activity Score para resi
 - Réguas de 0 a 10 em passos de 0,5 (escala de 21 círculos, Filocamo 2010).
 - Contagem: JADAS-10 e cJADAS-10 = qualquer articulação, limitada a 10; JADAS-27 = só as 27 (coluna cervical, cotovelos, punhos, MCF 1–3, IFP 1–5 incluindo a IF do polegar, quadris, joelhos, tornozelos); JADAS-71 = todas.
 - 71 articulações: ATM, coluna cervical, esternoclaviculares, acromioclaviculares, ombros, cotovelos, punhos, MCF 1–5, IFP 1–5, IFD 2–5, quadris, joelhos, tornozelos, subtalares, mediotársicas, MTF 1–5, IF dos pododáctilos 1–5. O script confere ao abrir que são 71, com 27 marcadas para o JADAS-27.
+  - Tornozelo (tibiotársica), subtalar e mediotársica contam separadas. Nos pés não há IFD: só MTF 1–5 e uma IF por dedo (com IFD dos pés seriam 79).
+  - Lista montada pela contagem padrão (boneco do Gaslini) e conferida pelo dono do projeto (o texto de Consolaro 2009 não pôde ser lido aqui: o site da revista bloqueou o acesso).
 - VHS normalizado = (VHS − 20) ÷ 10; PCR normalizada = (PCR em mg/L − 10) ÷ 10 (Nordal 2012); ambos limitados a 0–10. A PCR aceita mg/L ou mg/dL (mg/dL × 10).
 - cJADAS-10 não usa reagente de fase aguda (faixa 0–30). JADAS-10 0–40; JADAS-27 0–57; JADAS-71 0–101.
 - O escore só aparece quando há avaliação do médico, dos pais e a contagem articular. A contagem só vale se houver ao menos uma articulação marcada ou se o residente tocar em "Nenhuma articulação ativa", para não confundir "não examinado" com zero.
@@ -23,15 +27,19 @@ Calculadora em português do Juvenile Arthritis Disease Activity Score para resi
 | Atividade mínima | ≤ 4 | ≤ 5 | ≤ 4 | ≤ 6 |
 | Atividade moderada | ≤ 12 | ≤ 16 | ≤ 13 | ≤ 17 |
 | Alta atividade | > 12 | > 16 | > 13 | > 17 |
-- Oligoartrite persistente → cortes de oligo. Oligoartrite estendida e poliartrite FR negativo → cortes de poli (a coorte de poliartrite do estudo incluiu a oligo estendida; aviso na tela e no rodapé).
-- Poli FR positivo, sistêmica, entesite, psoriásica, indiferenciada → só o número, sem classificação.
+- Subtipo só em dois botões: Oligoarticular / Poliarticular (decisão do dono). Oligoartrite estendida → poliarticular (a coorte de poliartrite do estudo incluiu a oligo estendida; aviso na tela e no rodapé). Sistêmica e ERA terão escores próprios (sJADAS, JSpADA).
+- Sem subtipo escolhido → escore sem classificação.
 - JADAS-27 e JADAS-71 → só o número (sem cortes validados).
 
+## Doença clinicamente inativa (Wallace 2011)
+Seis critérios, todos obrigatórios: (1) nenhuma articulação ativa e (5) avaliação do médico = 0 são preenchidos automaticamente; (2) sem febre, exantema, serosite, esplenomegalia ou linfadenopatia generalizada atribuíveis à AIJ, (3) sem uveíte ativa (SUN), (4) VHS/PCR normal ou alterado não atribuível à AIJ e (6) rigidez matinal ≤ 15 min são Sim/Não. Algum "não" → "Não preenche"; algum sem resposta → "Avaliação incompleta". Remissão: inativa ≥ 6 meses em medicação; ≥ 12 meses sem medicação (só texto explicativo, a página não guarda histórico).
+
 ## Caso de teste (botão "Exemplo")
-Poliartrite FR negativo; médico 4; pais 3,5; VHS 45 mm/h (→ 2,5); 12 articulações ativas: joelho D, joelho E, punho D, tornozelo E, IFP2 D, cotovelo E, quadril D (7 das 27) + MTF1 D, IFD3 E, ATM D, ombro D, subtalar D.
+Poliarticular; médico 4; pais 3,5; VHS 45 mm/h (→ 2,5); 12 articulações ativas: joelho D, joelho E, punho D, tornozelo E, IFP2 D, cotovelo E, quadril D (7 das 27) + MTF1 D, IFD3 E, ATM D, ombro D, subtalar D.
 → cJADAS-10 = 17,5 (alta atividade); JADAS-10 = 20 (alta); JADAS-27 = 17; JADAS-71 = 22.
 Trocando para PCR 2,5 mg/dL (→ 1,5): JADAS-10 = 19; JADAS-27 = 16; JADAS-71 = 21; cJADAS-10 não muda.
-Limite: oligo persistente, médico 0,5, pais 0,5, nenhuma articulação, VHS 24 → cJADAS-10 = 1 e JADAS-10 = 1,4, ambos "doença inativa".
+Limite: oligoarticular, médico 0,5, pais 0,5, nenhuma articulação, VHS 24 → cJADAS-10 = 1 e JADAS-10 = 1,4, ambos "doença inativa".
+Wallace: oligoarticular, médico 0, pais 0,5, nenhuma articulação, VHS 24, itens 2/3/4/6 = Sim → "Doença clinicamente inativa"; trocando rigidez para Não → "Não preenche".
 
 ## Decisões de conteúdo
 - Tradução livre, sem validação transcultural. Manter esse aviso na página.
@@ -45,3 +53,4 @@ Limite: oligo persistente, médico 0,5, pais 0,5, nenhuma articulação, VHS 24 
 - Nordal EB et al. Ann Rheum Dis 2012;71:1122–7. doi:10.1136/annrheumdis-2011-200237
 - Filocamo G et al. J Rheumatol 2010;37:1534–41. doi:10.3899/jrheum.091474
 - Trincianti C et al. Arthritis Rheumatol 2021;73:1966–75. doi:10.1002/art.41879
+- Wallace CA et al. Arthritis Care Res 2011;63:929–36. doi:10.1002/acr.20497

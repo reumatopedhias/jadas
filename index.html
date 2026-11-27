@@ -11,47 +11,48 @@
    IDEA o boneco articular: o residente toca as articulações ativas e vê todas as versões do JADAS ao mesmo tempo
    COLOUR branco, tinta violeta-escura, violeta como cor dominante, vermelho-rosado para articulação ativa
    TYPE Atkinson Hyperlegible em dois pesos
-   LAYOUT laptop: etapas à esquerda, resultado fixo à direita; celular: barra fixa com os escores no topo */
+   LAYOUT tela larga (≥ 1000 px): boneco à esquerda, avaliações e resultado à direita;
+          tela estreita: uma coluna na ordem do atendimento. Faixa fixa com os escores no topo em qualquer largura. */
 :root{color-scheme:light dark;--bg:light-dark(#ffffff,#15111a);--ink:light-dark(#1f1726,#efe8f4);--mut:light-dark(#5f566a,#b3a9bd);--line:light-dark(#e4dcea,#3a3044);--panel:light-dark(#f7f2fa,#1f1826);--vio:light-dark(#6a2c8e,#c79be3);--vio2:light-dark(#efe3f6,#2f2238);--rose:light-dark(#c23b55,#f07a90);--fig:light-dark(#8a7f94,#8e8399);--id:#2f8a57;--lda:#7aa33a;--mda:#d99a17;--hda:#cf4436}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:16px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
 h1,h2,h3{line-height:1.1;letter-spacing:-.01em;margin:0}
-h1{font-size:clamp(30px,4vw,44px);text-wrap:balance}
-h2{font-size:24px}
+h1{font-size:clamp(28px,4vw,42px);text-wrap:balance}
+h2{font-size:21px;margin-bottom:8px}
 h3{font-size:18px}
 p{margin:.4em 0}
-.top{background:var(--vio);color:#fff;padding:22px max(4vw,16px) 0}
+.top{background:var(--vio);color:#fff;padding:20px max(4vw,16px) 22px}
 .top p{max-width:70ch;opacity:.92}
-.route{display:flex;gap:6px;overflow-x:auto;margin-top:16px}
-.route a{flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;color:#fff;text-decoration:none;padding:8px 10px 10px;border-radius:10px 10px 0 0;font-size:13px;min-width:84px;opacity:.85}
-.route a:hover,.route a:focus-visible{background:rgba(255,255,255,.14);opacity:1;outline:none}
-.route a.done{opacity:1}
-.route a.done span::after{content:" ✓"}
-.route svg{width:56px;height:38px}
-.wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px;max-width:1240px;margin:0 auto;padding:24px max(4vw,16px) 60px}
-.side{position:sticky;top:16px;align-self:start}
-.st{border-top:1px solid var(--line);padding:26px 0 8px;scroll-margin-top:80px}
-.st:first-child{border-top:0;padding-top:4px}
-.sthead{display:flex;gap:14px;align-items:center;margin-bottom:10px}
-.sthead svg{width:70px;height:46px;flex:none}
+.sbar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:8px max(4vw,16px);display:flex;gap:8px 20px;align-items:center;flex-wrap:wrap;font-size:15px}
+.sbar b{font-size:22px;font-variant-numeric:tabular-nums}
+.sbar .chip{font-size:13px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;max-width:1240px;margin:0 auto;padding:20px max(4vw,16px) 40px}
+@media(min-width:1000px){.grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);grid-template-rows:auto auto auto auto auto 1fr;column-gap:28px;align-items:start}.grid>section{grid-column:2}.grid>#juntas{grid-column:1;grid-row:1/7}}
+section{scroll-margin-top:70px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
 .n{font-size:13px;color:var(--mut)}
 .note{color:var(--mut);font-size:15px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}
-label.f{display:block;font-weight:700;margin:12px 0 6px}
-select,input[type=text]{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid color-mix(in srgb,var(--ink) 30%,transparent);border-radius:8px;padding:10px;min-height:44px;width:100%;max-width:220px}
+.step{font-size:13px;color:var(--mut);display:block;margin-bottom:2px}
+label.f{display:block;font-weight:700;margin:4px 0 6px}
+select,input[type=text]{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid color-mix(in srgb,var(--ink) 30%,transparent);border-radius:8px;padding:10px;min-height:44px;width:100%;max-width:200px}
 select:focus-visible,input:focus-visible,button:focus-visible,.j:focus-visible{outline:3px solid var(--vio);outline-offset:2px}
 .vas{display:flex;align-items:center;gap:12px;max-width:520px}
 .vas input[type=range]{flex:1;accent-color:var(--vio);height:44px}
-.vas output{font-size:22px;font-weight:700;min-width:3.2em;text-align:right;white-space:nowrap}
+.vas output{font-size:22px;font-weight:700;min-width:2.6em;text-align:right;white-space:nowrap}
 .vas .clr{font-size:13px}
 .ends{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);max-width:430px}
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-width:460px}
+.seg button{min-height:52px;font-size:17px}
+.seg button[aria-checked=true]{background:var(--vio);color:#fff}
+:root[data-theme=dark] .seg button[aria-checked=true]{color:#1a1020}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .seg button[aria-checked=true]{color:#1a1020}}
 .opts{display:grid;gap:6px;margin:6px 0}
-.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer;min-height:44px}
+.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer;min-height:44px}
 .opt:has(input:checked){border-color:var(--vio);background:var(--vio2)}
-.opt input{margin-top:4px;accent-color:var(--vio);width:18px;height:18px;flex:none}
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(15em,1fr));gap:6px}
+.opt input{accent-color:var(--vio);width:18px;height:18px;flex:none}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-width:460px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
 button{font:inherit;font-weight:700;border-radius:8px;min-height:44px;padding:8px 16px;cursor:pointer;border:1px solid var(--vio);background:var(--bg);color:var(--vio)}
 button.pri{background:var(--vio);color:#fff;border-color:var(--vio)}
@@ -87,8 +88,9 @@ table.jl th,table.jl td{padding:4px 6px;border-top:1px solid var(--line);text-al
 table.jl td.c{text-align:center;width:4.5em}
 table.jl input{width:22px;height:22px;accent-color:var(--rose)}
 .tag27{font-size:12px;color:var(--vio);border:1px solid var(--vio);border-radius:99px;padding:0 6px;margin-left:6px;white-space:nowrap}
+details summary{cursor:pointer;font-weight:700;color:var(--vio);min-height:32px}
 /* resultado */
-.res{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.res{border:2px solid var(--vio)}
 .score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:baseline;margin:10px 0 2px}
 .big{font-size:52px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
 .mid{font-size:34px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
@@ -103,14 +105,22 @@ table.jl input{width:22px;height:22px;accent-color:var(--rose)}
 .others{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 .parts{width:100%;border-collapse:collapse;font-size:15px;margin-top:10px}
 .parts td{padding:4px 0;border-top:1px solid var(--line)}
-.parts td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:8px}
+.parts td:last-child{text-align:right;font-variant-numeric:tabular-nums;padding-left:8px}
 .warn{font-size:14px;color:var(--mut);margin-top:12px}
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.mbar{display:none}
-details summary{cursor:pointer;font-weight:700;color:var(--vio);min-height:32px}
+pre.txt{white-space:pre-wrap;word-break:break-word;font:14px/1.45 ui-monospace,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;margin:8px 0 0;max-height:220px;overflow:auto}
+/* Wallace */
+.wl{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.wl li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 10px;align-items:start;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.wl .ic{font-weight:700;font-size:18px;text-align:center;line-height:1.3}
+.wl .ok{color:var(--id)}.wl .no{color:var(--hda)}.wl .q{color:var(--mut)}
+.yn{display:flex;gap:14px;grid-column:2;font-size:15px}
+.yn label{display:inline-flex;gap:6px;align-items:center;min-height:32px;cursor:pointer}
+.yn input{accent-color:var(--vio);width:18px;height:18px}
+.auto{grid-column:2;font-size:13px;color:var(--mut)}
 .src{font-size:14px;color:var(--mut)}
 .src a{color:var(--vio)}
-@media(max-width:900px){.wrap{grid-template-columns:minmax(0,1fr)}.side{position:static}.mbar{display:flex;position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:8px max(4vw,16px);gap:16px;align-items:center;font-size:15px;flex-wrap:wrap}.mbar b{font-size:20px}}
+footer{max-width:1240px;margin:0 auto;padding:0 max(4vw,16px) 40px}
 @media(max-width:520px){.pair{grid-template-columns:minmax(0,1fr)}.pair figure{max-width:300px;margin:0 auto;width:100%}}
 @media(prefers-reduced-motion:reduce){.mark b{transition:none}}
 </style>
@@ -118,32 +128,39 @@ details summary{cursor:pointer;font-weight:700;color:var(--vio);min-height:32px}
 <body>
 <header class="top">
   <h1>JADAS à beira do leito</h1>
-  <p>Calculadora do Juvenile Arthritis Disease Activity Score: marque no boneco as articulações ativas e veja juntos o cJADAS-10, o JADAS-10, o JADAS-27 e o JADAS-71.</p>
-  <nav class="route" id="route" aria-label="Etapas"></nav>
+  <p>Marque no boneco as articulações ativas e veja juntos o cJADAS-10, o JADAS-10, o JADAS-27 e o JADAS-71, com os critérios de doença inativa de Wallace.</p>
 </header>
-<div class="mbar" id="mbar"><span>cJADAS-10 <b id="m1">–</b></span><span>JADAS-10 <b id="m2">–</b></span><span id="mst" class="note"></span></div>
-<main class="wrap">
-  <div id="steps"></div>
-  <aside class="side"><div class="res" id="res" aria-live="polite"></div></aside>
+<div class="sbar" id="sbar" aria-live="polite"></div>
+<main class="grid">
+  <section id="sub" class="card"><span class="step">1</span><h2>Subtipo</h2><div class="seg" role="radiogroup" aria-label="Subtipo"><button type="button" role="radio" aria-checked="false" data-cat="oligo">Oligoarticular</button><button type="button" role="radio" aria-checked="false" data-cat="poli">Poliarticular</button></div><p class="note">Define os pontos de corte (ACR 2021), validados para oligoartrite e poliartrite FR negativo. <b>Oligoartrite estendida → poliarticular.</b> Sistêmica e artrite relacionada à entesite têm escores próprios (sJADAS e JSpADA).</p></section>
+  <section id="pais" class="card"><span class="step">2 · antes do exame</span><h2>Pais ou paciente</h2><p>“Considerando todas as formas como a artrite afeta seu filho, como ele está neste momento?”</p><label class="f" for="paga">Avaliação global do bem-estar</label><div id="vpaga"></div></section>
+  <section id="juntas"><span class="step">3 · exame</span><h2>Articulações ativas</h2><div id="jbox"></div></section>
+  <section id="lab" class="card"><span class="step">4</span><h2>Laboratório</h2><p class="note">Só para o JADAS-10, 27 e 71. O cJADAS-10 não precisa.</p><div class="two"><label class="opt"><input type="radio" name="infl" value="vhs" checked><span><b>VHS</b></span></label><label class="opt"><input type="radio" name="infl" value="pcr"><span><b>PCR</b></span></label></div><div id="fvhs"><label class="f" for="vhs" style="margin-top:10px">VHS (mm/h)</label><input type="text" inputmode="decimal" id="vhs" autocomplete="off"></div><div id="fpcr" hidden><label class="f" for="pcr" style="margin-top:10px">PCR</label><div class="row"><input type="text" inputmode="decimal" id="pcr" autocomplete="off"><select id="un" aria-label="Unidade da PCR"><option value="mgL">mg/L</option><option value="mgdL">mg/dL</option></select></div></div><p class="note" id="inorm"></p><details><summary>Como é normalizado</summary><p class="note">VHS → (VHS − 20) ÷ 10; PCR em mg/L → (PCR − 10) ÷ 10. Abaixo de 0 conta 0; acima de 10 conta 10. Confira a unidade do laudo: 1 mg/dL = 10 mg/L.</p></details></section>
+  <section id="med" class="card"><span class="step">5 · depois do exame</span><h2>Médico</h2><label class="f" for="phga">Avaliação global da atividade da doença</label><div id="vphga"></div></section>
+  <section id="fim"><div class="card res" id="res"></div><div class="card" id="wal" style="margin-top:16px"></div></section>
 </main>
+<footer>
+<p class="src">Tradução livre para o português, sem validação transcultural. Ferramenta de apoio: não substitui o julgamento clínico. Nenhum dado é guardado ou enviado. Avaliações globais de 0 a 10 em passos de 0,5 (escala de 21 círculos, validada como alternativa à linha de 10 cm). Pontos de corte do ACR 2021 apenas para cJADAS-10 e JADAS-10, definidos em oligoartrite persistente e em poliartrite (oligoartrite estendida + poliartrite FR negativo); por isso a oligoartrite estendida usa os cortes de poliartrite. JADAS-27 e JADAS-71 aparecem sem classificação. Contagem de 71 articulações: tornozelo, subtalar e mediotársica contam separadas; nos pés não há interfalangianas distais.</p>
+<p class="src">Referências: Consolaro A et al. Arthritis Rheum 2009;61:658–66, JADAS (<a href="https://doi.org/10.1002/art.24516">doi</a>); McErlane F et al. Ann Rheum Dis 2013;72:1983–8, JADAS clínico (<a href="https://doi.org/10.1136/annrheumdis-2012-202031">doi</a>); Nordal EB et al. Ann Rheum Dis 2012;71:1122–7, JADAS com PCR (<a href="https://doi.org/10.1136/annrheumdis-2011-200237">doi</a>); Filocamo G et al. J Rheumatol 2010;37:1534–41, escala de 21 círculos (<a href="https://doi.org/10.3899/jrheum.091474">doi</a>); Trincianti C et al. Arthritis Rheumatol 2021;73:1966–75, pontos de corte ACR 2021 (<a href="https://doi.org/10.1002/art.41879">doi</a>); Wallace CA et al. Arthritis Care Res 2011;63:929–36, doença clinicamente inativa (<a href="https://doi.org/10.1002/acr.20497">doi</a>).</p>
+</footer>
 <script>
 {
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-/* ---------- articulações (contagem de 71, Consolaro 2009) ---------- */
+/* ---------- articulações (contagem de 71) ---------- */
 /* k27 = faz parte do JADAS-27: coluna cervical, cotovelos, punhos, MCF 1–3, IFP 1–5, quadris, joelhos, tornozelos */
 const J=[];
 const add=(id,nome,reg,k27)=>J.push({id,nome,reg,k27});
 const LADOS=[['d','D'],['e','E']];
 add('cerv','Coluna cervical','Coluna cervical',true);
-for(const [reg,base,k27] of [['ATM','Temporomandibular',false],['Esternoclavicular','Esternoclavicular',false],['Acromioclavicular','Acromioclavicular',false],['Ombro','Ombro',false],['Cotovelo','Cotovelo',true],['Punho','Punho',true]])
- for(const [s,S] of LADOS)add(reg.toLowerCase().slice(0,4)+'_'+s,base+' '+S,reg,k27);
+for(const [reg,k27] of [['ATM',false],['Esternoclavicular',false],['Acromioclavicular',false],['Ombro',false],['Cotovelo',true],['Punho',true]])
+ for(const [s,S] of LADOS)add(reg.toLowerCase().slice(0,4)+'_'+s,reg+' '+S,reg,k27);
 for(const [s,S] of LADOS){for(let i=1;i<=5;i++)add('mcf'+i+'_'+s,'MCF'+i+' '+S,'MCF '+i,i<=3);}
 for(const [s,S] of LADOS){for(let i=1;i<=5;i++)add('ifp'+i+'_'+s,(i===1?'IF do polegar':'IFP'+i)+' '+S,i===1?'IF do polegar (IFP1)':'IFP '+i,true);}
 for(const [s,S] of LADOS){for(let i=2;i<=5;i++)add('ifd'+i+'_'+s,'IFD'+i+' '+S,'IFD '+i,false);}
-for(const [reg,base,k27] of [['Quadril','Quadril',true],['Joelho','Joelho',true],['Tornozelo','Tornozelo',true],['Subtalar','Subtalar',false],['Mediotársica','Mediotársica',false]])
- for(const [s,S] of LADOS)add(reg.toLowerCase().slice(0,4)+'_'+s,base+' '+S,reg,k27);
+for(const [reg,k27] of [['Quadril',true],['Joelho',true],['Tornozelo (tibiotársica)',true],['Subtalar',false],['Mediotársica',false]])
+ for(const [s,S] of LADOS)add(reg.toLowerCase().slice(0,4)+'_'+s,reg+' '+S,reg,k27);
 for(const [s,S] of LADOS){for(let i=1;i<=5;i++)add('mtf'+i+'_'+s,'MTF'+i+' '+S,'MTF '+i,false);}
 for(const [s,S] of LADOS){for(let i=1;i<=5;i++)add('ifpe'+i+'_'+s,(i===1?'IF do hálux':'IF do '+i+'º pododáctilo')+' '+S,i===1?'IF do hálux':'IF do '+i+'º pododáctilo',false);}
 const JB=Object.fromEntries(J.map(j=>[j.id,j]));
@@ -169,7 +186,7 @@ ${jt('cerv',160,94)}
 ${Object.entries(bodyPts).map(([k,[x,y]])=>jt(k+'_d',x,y)+jt(k+'_e',mir(x),y)).join('')}
 </svg>`;
 /* mãos em posição anatômica (palma para o examinador): polegar para fora */
-const handSvg=s=>{const f=s==='d'?(x=>x):(x=>180-x);const P=(a)=>a.map(([x,y])=>f(x)+','+y).join(' ');
+const handSvg=s=>{const f=s==='d'?(x=>x):(x=>180-x);const P=a=>a.map(([x,y])=>f(x)+','+y).join(' ');
  const fing=[[66,130,85,52,26],[94,126,78,44,16],[122,130,85,52,26],[150,140,102,76,52]];
  return `<svg viewBox="0 0 180 240" role="group" aria-label="Mão ${s==='d'?'direita':'esquerda'}">
  <rect x="${s==='d'?48:20}" y="128" width="112" height="84" rx="20" class="fig-thin"/>
@@ -179,7 +196,7 @@ const handSvg=s=>{const f=s==='d'?(x=>x):(x=>180-x);const P=(a)=>a.map(([x,y])=>
  ${fing.map(([x,m,p,d],i)=>jt('mcf'+(i+2)+'_'+s,f(x),m)+jt('ifp'+(i+2)+'_'+s,f(x),p)+jt('ifd'+(i+2)+'_'+s,f(x),d)).join('')}
  </svg>`;};
 /* pés vistos de cima, dedos para cima: hálux para dentro (medial) */
-const footSvg=s=>{const f=s==='d'?(x=>x):(x=>180-x);const P=(a)=>a.map(([x,y])=>f(x)+','+y).join(' ');
+const footSvg=s=>{const f=s==='d'?(x=>x):(x=>180-x);const P=a=>a.map(([x,y])=>f(x)+','+y).join(' ');
  const toes=[[140,112,70,36],[114,104,70,42],[90,108,76,50],[68,114,84,60],[48,124,98,76]];
  return `<svg viewBox="0 0 180 260" role="group" aria-label="Pé ${s==='d'?'direito':'esquerdo'}">
  <path class="fig-thin" d="M${f(40)} 124 C${f(30)} 180 ${f(50)} 236 ${f(94)} 248 C${f(138)} 236 ${f(160)} 180 ${f(156)} 112"/>
@@ -188,34 +205,31 @@ const footSvg=s=>{const f=s==='d'?(x=>x):(x=>180-x);const P=(a)=>a.map(([x,y])=>
  ${jt('medi_'+s,f(96),166)}${jt('subt_'+s,f(96),214)}
  </svg>`;};
 
-const ICON={
- pre:`<svg viewBox="0 0 160 110"><rect x="40" y="20" width="80" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="7"/><path d="M58 48h44M58 64h44M58 80h28" stroke="currentColor" stroke-width="7" stroke-linecap="round"/></svg>`,
- art:`<svg viewBox="0 0 160 110"><g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"><path d="M80 26v40M62 34h36M62 34l-10 30M98 34l10 30M70 66l-4 36M90 66l4 36"/></g><circle cx="80" cy="12" r="9" fill="currentColor"/><circle cx="67" cy="86" r="8" fill="var(--rose)"/></svg>`,
- lab:`<svg viewBox="0 0 160 110"><g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M66 14v70a14 14 0 0 0 28 0V14M60 14h40"/></g><path d="M70 58h20v26a10 10 0 0 1-20 0z" fill="var(--rose)"/></svg>`,
- fim:`<svg viewBox="0 0 160 110"><path d="M40 58l26 26 54-56" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-};
-
-/* ---------- categorias e pontos de corte (ACR 2021, Trincianti et al.) ---------- */
-const CATS=[['oligo_p','Oligoartrite persistente','oligo'],['oligo_e','Oligoartrite estendida','poli'],['poli_n','Poliartrite FR negativo','poli'],['poli_p','Poliartrite FR positivo',null],['sist','Sistêmica',null],['era','Artrite relacionada à entesite',null],['pso','Artrite psoriásica',null],['indif','Artrite indiferenciada',null]];
+/* ---------- pontos de corte (ACR 2021, Trincianti et al.) ---------- */
 const CUT={oligo:{c10:[1.1,4,12],j10:[1.4,4,13]},poli:{c10:[2.5,5,16],j10:[2.7,6,17]}};
+const CATN={oligo:'oligoarticular',poli:'poliarticular'};
 const STATES=[['Doença inativa','var(--id)'],['Atividade mínima','var(--lda)'],['Atividade moderada','var(--mda)'],['Alta atividade','var(--hda)']];
+/* ---------- critérios de doença clinicamente inativa (Wallace 2011) ---------- */
+const WAL=[
+ ['w1','Nenhuma articulação com artrite ativa','auto'],
+ ['w2','Sem febre, exantema, serosite, esplenomegalia ou linfadenopatia generalizada atribuíveis à AIJ'],
+ ['w3','Sem uveíte ativa (critérios SUN)'],
+ ['w4','VHS ou PCR normal para o laboratório (ou, se alterado, não atribuível à AIJ)'],
+ ['w5','Avaliação global do médico no melhor valor possível (0)','auto'],
+ ['w6','Rigidez matinal de no máximo 15 minutos'],
+];
 
 /* ---------- estado (só na memória da página) ---------- */
 const S={};
-const reset=()=>Object.assign(S,{cat:null,paga:null,phga:null,infl:'vhs',vhs:null,pcr:null,un:'mgL',on:new Set(),none:false});
+const reset=()=>Object.assign(S,{cat:null,paga:null,phga:null,infl:'vhs',vhs:null,pcr:null,un:'mgL',on:new Set(),none:false,w2:null,w3:null,w4:null,w6:null});
 reset();
 
 /* ---------- componentes ---------- */
 const vas=(id,lo,hi)=>`<div class="vas"><input type="range" id="${id}" min="0" max="10" step="0.5" value="0" aria-label="${esc(lo)} a ${esc(hi)}"><output id="${id}o">–</output><button type="button" class="clr" data-clr="${id}">Limpar</button></div><div class="ends"><span>0 = ${lo}</span><span>10 = ${hi}</span></div>`;
-const jlist=`<table class="jl"><thead><tr><th>Articulação</th><th class="c">Direita</th><th class="c">Esquerda</th></tr></thead><tbody>${REGS.map(r=>{const js=J.filter(j=>j.reg===r);const cell=j=>j?`<input type="checkbox" data-jl="${j.id}" aria-label="${esc(j.nome)}">`:'';return `<tr><td>${esc(r)}${js[0].k27?'<span class="tag27">27</span>':''}</td>${js.length===1?`<td class="c" colspan="2">${cell(js[0])}</td>`:`<td class="c">${cell(js.find(j=>j.id.endsWith('_d')))}</td><td class="c">${cell(js.find(j=>j.id.endsWith('_e')))}</td>`}</tr>`;}).join('')}</tbody></table>`;
-const STEPS=[
- {id:'pre',ic:'pre',t:'Antes do exame',s:'Categoria da AIJ e pergunta aos pais ou paciente',h:`<div class="card"><h3>Categoria (ILAR)</h3><p class="note">Define os pontos de corte. Só há cortes validados para oligoartrite e poliartrite FR negativo; nas demais o escore aparece sem classificação.</p><div class="opts two">${CATS.map(([v,t,c])=>`<label class="opt"><input type="radio" name="cat" value="${v}"><span>${t}${c?'':' <span class="n">(sem cortes)</span>'}</span></label>`).join('')}</div></div><p>Pergunta aos pais (ou ao paciente, se tiver idade para responder): <b>“Considerando todas as formas como a artrite afeta seu filho, como ele está neste momento?”</b></p><label class="f" for="paga">Avaliação global do bem-estar pelos pais/paciente</label>${vas('paga','muito bem','muito mal')}`},
- {id:'art',ic:'art',t:'Exame articular',s:'Toque nas articulações ativas no boneco, nas mãos e nos pés',h:`<p class="note"><b>Articulação ativa</b> = edema (não devido a alargamento ósseo) ou, na ausência de edema, limitação de movimento acompanhada de dor à mobilização e/ou dolorimento.</p><div class="legend"><span><i></i>Articulação</span><span><i class="l27"></i>Conta no JADAS-27</span><span><i class="lon"></i>Ativa</span></div><div class="figs">${BODY}<div class="pair"><figure>${handSvg('d')}<figcaption>Mão direita</figcaption></figure><figure>${handSvg('e')}<figcaption>Mão esquerda</figcaption></figure></div><div class="pair"><figure>${footSvg('d')}<figcaption>Pé direito</figcaption></figure><figure>${footSvg('e')}<figcaption>Pé esquerdo</figcaption></figure></div><p class="figcap">Mãos com a palma voltada para o examinador. Pés vistos de cima: as duas articulações abaixo dos dedos são a mediotársica e a subtalar.</p></div><p class="count" id="jcount"></p><div class="row"><button type="button" id="none" aria-pressed="false">Nenhuma articulação ativa</button><button type="button" id="jclr">Desmarcar todas</button></div><details class="card"><summary>Marcar pela lista</summary>${jlist}</details>`},
- {id:'lab',ic:'lab',t:'Laboratório',s:'VHS ou PCR, só para o JADAS-10, 27 e 71. O cJADAS-10 não precisa',h:`<div class="card"><div class="opts two"><label class="opt"><input type="radio" name="infl" value="vhs" checked><span><b>VHS</b> (mm/h)</span></label><label class="opt"><input type="radio" name="infl" value="pcr"><span><b>PCR</b></span></label></div><div id="fvhs"><label class="f" for="vhs">VHS (mm/h)</label><input type="text" inputmode="decimal" id="vhs" autocomplete="off"></div><div id="fpcr" hidden><label class="f" for="pcr">PCR</label><div class="row"><input type="text" inputmode="decimal" id="pcr" autocomplete="off"><select id="un" aria-label="Unidade da PCR"><option value="mgL">mg/L</option><option value="mgdL">mg/dL</option></select></div></div><p class="note" id="inorm"></p><p class="note">Normalização para 0–10: VHS → (VHS − 20) ÷ 10; PCR em mg/L → (PCR − 10) ÷ 10. Valores abaixo de 0 contam 0 e acima de 10 contam 10. Confira a unidade do laudo: 1 mg/dL = 10 mg/L.</p></div>`},
- {id:'fim',ic:'fim',t:'Fechamento',s:'Avaliação global do médico, depois de todo o exame',h:`<label class="f" for="phga">Avaliação global da atividade da doença pelo médico</label>${vas('phga','sem atividade','atividade máxima')}`},
-];
-$('#route').innerHTML=STEPS.map(s=>`<a href="#${s.id}" id="r_${s.id}">${ICON[s.ic]}<span>${s.t}</span></a>`).join('');
-$('#steps').innerHTML=STEPS.map((s,i)=>`<section class="st" id="${s.id}"><div class="sthead">${ICON[s.ic].replace('<svg','<svg style="color:var(--vio)"')}<div><div class="n">Etapa ${i+1} de ${STEPS.length}</div><h2>${s.t}</h2><p class="note">${s.s}</p></div></div>${s.h}</section>`).join('');
+$('#vpaga').innerHTML=vas('paga','muito bem','muito mal');
+$('#vphga').innerHTML=vas('phga','sem atividade','atividade máxima');
+const jlist=`<table class="jl"><thead><tr><th>Articulação</th><th class="c">Direita</th><th class="c">Esquerda</th></tr></thead><tbody>${REGS.map(r=>{const js=J.filter(j=>j.reg===r);const cell=j=>`<input type="checkbox" data-jl="${j.id}" aria-label="${esc(j.nome)}">`;return `<tr><td>${esc(r)}${js[0].k27?'<span class="tag27">27</span>':''}</td>${js.length===1?`<td class="c" colspan="2">${cell(js[0])}</td>`:`<td class="c">${cell(js.find(j=>j.id.endsWith('_d')))}</td><td class="c">${cell(js.find(j=>j.id.endsWith('_e')))}</td>`}</tr>`;}).join('')}</tbody></table>`;
+$('#jbox').innerHTML=`<p class="note"><b>Articulação ativa</b> = edema (não devido a alargamento ósseo) ou, na ausência de edema, limitação de movimento com dor à mobilização e/ou dolorimento.</p><div class="legend"><span><i></i>Articulação</span><span><i class="l27"></i>Conta no JADAS-27</span><span><i class="lon"></i>Ativa</span></div><div class="figs">${BODY}<div class="pair"><figure>${handSvg('d')}<figcaption>Mão direita</figcaption></figure><figure>${handSvg('e')}<figcaption>Mão esquerda</figcaption></figure></div><div class="pair"><figure>${footSvg('d')}<figcaption>Pé direito</figcaption></figure><figure>${footSvg('e')}<figcaption>Pé esquerdo</figcaption></figure></div><p class="figcap">Mãos com a palma voltada para o examinador. Pés vistos de cima: abaixo dos dedos ficam a mediotársica e a subtalar.</p></div><p class="count" id="jcount"></p><div class="row"><button type="button" id="none" aria-pressed="false">Nenhuma articulação ativa</button><button type="button" id="jclr">Desmarcar todas</button></div><details class="card" style="margin-top:12px"><summary>Marcar pela lista</summary>${jlist}</details>`;
 
 /* ---------- cálculo ---------- */
 const r2=x=>Math.round(x*100)/100;
@@ -225,46 +239,53 @@ const parse=v=>{const t=String(v).trim().replace(',','.');return t===''||isNaN(+
 const calc=()=>{
  const n=S.on.size,n27=[...S.on].filter(id=>JB[id].k27).length,n10=Math.min(n,10);
  const jOk=n>0||S.none;
- let raw=null,inf=null;
- if(S.infl==='vhs'&&filled(S.vhs)){raw=S.vhs;inf=r2(clamp((S.vhs-20)/10));}
- if(S.infl==='pcr'&&filled(S.pcr)){raw=S.pcr*(S.un==='mgdL'?10:1);inf=r2(clamp((raw-10)/10));}
+ let inf=null;
+ if(S.infl==='vhs'&&filled(S.vhs))inf=r2(clamp((S.vhs-20)/10));
+ if(S.infl==='pcr'&&filled(S.pcr))inf=r2(clamp((S.pcr*(S.un==='mgdL'?10:1)-10)/10));
  const g=filled(S.phga)&&filled(S.paga)&&jOk;
  const c10=g?r2(S.phga+S.paga+n10):null;
  const j10=g&&inf!==null?r2(S.phga+S.paga+n10+inf):null;
  const j27=g&&inf!==null?r2(S.phga+S.paga+n27+inf):null;
  const j71=g&&inf!==null?r2(S.phga+S.paga+n+inf):null;
- return {n,n27,n10,jOk,raw,inf,c10,j10,j27,j71};
+ /* Wallace: true = atende, false = não atende, null = não avaliado */
+ const w={w1:jOk?n===0:null,w5:filled(S.phga)?S.phga===0:null,w2:S.w2,w3:S.w3,w4:S.w4,w6:S.w6};
+ const wv=Object.values(w),wal=wv.includes(false)?false:wv.every(v=>v===true)?true:null;
+ return {n,n27,n10,jOk,inf,c10,j10,j27,j71,w,wal};
 };
-const cutsOf=()=>{const c=CATS.find(x=>x[0]===S.cat);return c&&c[2]?CUT[c[2]]:null;};
+const cut=()=>S.cat?CUT[S.cat]:null;
 const state=(v,c)=>v<=c[0]?0:v<=c[1]?1:v<=c[2]?2:3;
 const fmt=v=>String(r2(v)).replace('.',',');
+const stName=(v,c)=>v===null||!c?'':STATES[state(v,c)][0];
+const chip=(v,c)=>v===null||!c?'':`<span class="chip" style="background:${STATES[state(v,c)][1]}">${STATES[state(v,c)][0]}</span>`;
 const ruler=(c,max,v)=>{const p=x=>x/max*100,seg=[[0,c[0],0],[c[0],c[1],1],[c[1],c[2],2],[c[2],max,3]];return `<div class="ruler">${seg.map(([a,b,i])=>`<i style="width:${p(b-a)}%;background:${STATES[i][1]}"></i>`).join('')}</div><div class="mark">${v===null?'':`<b style="left:${Math.min(100,p(v))}%"></b>`}</div><div class="ticks">${c.map(x=>`<span style="left:${p(x)}%">${fmt(x)}</span>`).join('')}</div>`;};
-const block=(name,v,max,c,cls)=>{const st=v===null||!c?null:state(v,c);return `<div class="score"><span class="${cls}">${v===null?'–':fmt(v)}</span><span><b>${name}</b> <span class="lab">de 0–${max}</span><br>${v===null?'<span class="lab">incompleto</span>':st===null?'<span class="lab">'+(S.cat?'sem pontos de corte para esta categoria':'escolha a categoria para classificar')+'</span>':`<span class="chip" style="background:${STATES[st][1]}">${STATES[st][0]}</span>`}</span></div>${c?ruler(c,max,v):''}`;};
-const catName=()=>{const c=CATS.find(x=>x[0]===S.cat);return c?c[1]:'–';};
+const block=(name,v,max,c,cls)=>`<div class="score"><span class="${cls}">${v===null?'–':fmt(v)}</span><span><b>${name}</b> <span class="lab">de 0–${max}</span><br>${v===null?'<span class="lab">incompleto</span>':c?chip(v,c):'<span class="lab">escolha o subtipo para classificar</span>'}</span></div>${c?ruler(c,max,v):''}`;
+const texto=r=>{
+ const c=cut(),line=(nm,v,cc)=>`${nm}: ${v===null?'incompleto':fmt(v)+(cc?' ('+stName(v,cc)+')':'')}`;
+ const lista=J.filter(j=>S.on.has(j.id)).map(j=>j.nome).join(', ')||'nenhuma';
+ const infl=r.inf===null?'não informado':(S.infl==='vhs'?`VHS ${fmt(S.vhs)} mm/h`:`PCR ${fmt(S.pcr)} ${S.un==='mgdL'?'mg/dL':'mg/L'}`)+` (normalizado ${fmt(r.inf)})`;
+ return [`JADAS — subtipo ${S.cat?CATN[S.cat]:'não informado'}${c?' (cortes ACR 2021)':''}`,
+  line('cJADAS-10',r.c10,c&&c.c10),line('JADAS-10',r.j10,c&&c.j10),line('JADAS-27',r.j27),line('JADAS-71',r.j71),
+  `Médico ${filled(S.phga)?fmt(S.phga):'–'}/10; pais/paciente ${filled(S.paga)?fmt(S.paga):'–'}/10; ${infl}`,
+  r.jOk?`Articulações ativas: ${r.n} (${r.n27} das 27): ${lista}`:'Articulações ativas: exame não registrado',
+  `Doença clinicamente inativa (Wallace 2011): ${r.wal===true?'sim':r.wal===false?'não':'avaliação incompleta'}`].join('\n');
+};
 const render=()=>{
- const r=calc(),cut=cutsOf(),grupo=cut?(cut===CUT.oligo?'oligoartrite':'poliartrite'):null;
- const inflTxt=r.inf===null?'–':(S.infl==='vhs'?`VHS ${fmt(S.vhs)} mm/h`:`PCR ${fmt(S.pcr)} ${S.un==='mgdL'?'mg/dL':'mg/L'}`)+` → ${fmt(r.inf)}`;
- const rows=[['Categoria',catName()],['Médico (0–10)',filled(S.phga)?fmt(S.phga):'–'],['Pais/paciente (0–10)',filled(S.paga)?fmt(S.paga):'–'],['Articulações ativas (71)',r.jOk?r.n:'–'],['… das 27',r.jOk?r.n27:'–'],['… limitada a 10',r.jOk?r.n10:'–'],['Reagente de fase aguda (0–10)',inflTxt]];
- $('#res').innerHTML=`<h2>Resultado</h2>${block('cJADAS-10',r.c10,30,cut&&cut.c10,'big')}${block('JADAS-10',r.j10,40,cut&&cut.j10,'mid')}<div class="others"><div><span class="mid">${r.j27===null?'–':fmt(r.j27)}</span><br><b>JADAS-27</b> <span class="lab">de 0–57</span></div><div><span class="mid">${r.j71===null?'–':fmt(r.j71)}</span><br><b>JADAS-71</b> <span class="lab">de 0–101</span></div></div><p class="note">JADAS-27 e JADAS-71: sem pontos de corte validados, só o número.</p><table class="parts"><tbody>${rows.map(([a,b])=>`<tr><td>${a}</td><td>${esc(b)}</td></tr>`).join('')}</tbody></table><div class="acts"><button type="button" class="pri" id="copy">Copiar para o prontuário</button><button type="button" id="ex">Exemplo</button><button type="button" id="rst">Limpar tudo</button></div><p class="note" id="msg" role="status"></p><p class="warn">${grupo?`Cortes do ACR 2021 para ${grupo}.`:'Cortes do ACR 2021 só para oligoartrite e poliartrite FR negativo.'}${S.cat==='oligo_e'?' Na oligoartrite estendida usam-se os cortes de poliartrite: a coorte de poliartrite do estudo incluiu esses pacientes.':''} A contagem do cJADAS-10 e do JADAS-10 é limitada a 10 articulações.</p>`;
- const st=(v,c)=>v===null||!c?'':STATES[state(v,c)][0];
- $('#m1').textContent=r.c10===null?'–':fmt(r.c10);$('#m2').textContent=r.j10===null?'–':fmt(r.j10);
- $('#mst').textContent=st(r.c10,cut&&cut.c10);
+ const r=calc(),c=cut();
+ $('#sbar').innerHTML=`<span>cJADAS-10 <b>${r.c10===null?'–':fmt(r.c10)}</b> ${chip(r.c10,c&&c.c10)}</span><span>JADAS-10 <b>${r.j10===null?'–':fmt(r.j10)}</b></span><span class="n">${S.cat?CATN[S.cat]:'subtipo não escolhido'}</span>`;
+ const rows=[['Médico (0–10)',filled(S.phga)?fmt(S.phga):'–'],['Pais/paciente (0–10)',filled(S.paga)?fmt(S.paga):'–'],['Articulações ativas (71)',r.jOk?r.n:'–'],['… das 27',r.jOk?r.n27:'–'],['… limitada a 10',r.jOk?r.n10:'–'],['VHS/PCR normalizado (0–10)',r.inf===null?'–':fmt(r.inf)]];
+ $('#res').innerHTML=`<span class="step">6</span><h2>Resultado</h2>${block('cJADAS-10',r.c10,30,c&&c.c10,'big')}${block('JADAS-10',r.j10,40,c&&c.j10,'mid')}<div class="others"><div><span class="mid">${r.j27===null?'–':fmt(r.j27)}</span><br><b>JADAS-27</b> <span class="lab">de 0–57</span></div><div><span class="mid">${r.j71===null?'–':fmt(r.j71)}</span><br><b>JADAS-71</b> <span class="lab">de 0–101</span></div></div><p class="note">JADAS-27 e JADAS-71: sem pontos de corte validados, só o número.</p><table class="parts"><tbody>${rows.map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</tbody></table><p class="warn">${c?`Cortes do ACR 2021 para ${CATN[S.cat]}.`:'Escolha o subtipo para ver a classificação.'} A contagem do cJADAS-10 e do JADAS-10 é limitada a 10 articulações.</p><h3 style="margin-top:14px">Texto para o prontuário</h3><pre class="txt" id="txt">${esc(texto(r))}</pre><div class="acts"><button type="button" class="pri" id="copy">Copiar para o prontuário</button><button type="button" id="ex">Exemplo</button><button type="button" id="rst">Limpar tudo</button></div><p class="note" id="msg" role="status"></p>`;
+ const ic=v=>v===true?'<span class="ic ok" aria-label="atende">✓</span>':v===false?'<span class="ic no" aria-label="não atende">✗</span>':'<span class="ic q" aria-label="não avaliado">?</span>';
+ $('#wal').innerHTML=`<h2>Doença clinicamente inativa?</h2><p class="note">Critérios de Wallace (ACR 2011): todos os seis precisam estar presentes.</p><ul class="wl">${WAL.map(([id,t,auto])=>`<li>${ic(r.w[id])}<span>${t}</span>${auto?`<span class="auto">Preenchido automaticamente (${id==='w1'?'exame articular':'avaliação do médico'})</span>`:`<span class="yn"><label><input type="radio" name="${id}" value="1"${S[id]===true?' checked':''}> Sim</label><label><input type="radio" name="${id}" value="0"${S[id]===false?' checked':''}> Não</label></span>`}</li>`).join('')}</ul><p>${r.wal===true?'<span class="chip" style="background:var(--id)">Doença clinicamente inativa</span>':r.wal===false?'<span class="chip" style="background:var(--hda)">Não preenche</span>':'<span class="lab">Avaliação incompleta</span>'}</p><details><summary>Remissão clínica</summary><p class="note">Em medicação: doença clinicamente inativa por pelo menos 6 meses contínuos. Sem medicação: por pelo menos 12 meses contínuos após suspender toda medicação para artrite e uveíte.</p></details>`;
  $('#jcount').innerHTML=r.jOk?`Articulações ativas: <b>${r.n}</b> <span class="n">(${r.n27} das 27; ${r.n10} para o JADAS-10)</span>`:'<span class="note">Marque as articulações ativas, ou toque em “Nenhuma articulação ativa”.</span>';
  $('#inorm').textContent=r.inf===null?'':`Valor normalizado: ${fmt(r.inf)}`;
- const done={pre:!!S.cat&&filled(S.paga),art:r.jOk,lab:r.inf!==null,fim:filled(S.phga)};
- for(const k in done)$('#r_'+k).classList.toggle('done',done[k]);
- $('#copy').onclick=()=>{
-  const line=(nm,v,c)=>`${nm}: ${v===null?'incompleto':fmt(v)+(c?' ('+st(v,c)+')':'')}`;
-  const lista=J.filter(j=>S.on.has(j.id)).map(j=>j.nome).join(', ')||'nenhuma';
-  const t=[line('cJADAS-10',r.c10,cut&&cut.c10),line('JADAS-10',r.j10,cut&&cut.j10),line('JADAS-27',r.j27),line('JADAS-71',r.j71)].join(' | ')+(grupo?` (cortes ACR 2021, ${grupo})`:'')+'\n'+rows.map(([a,b])=>`${a}: ${b}`).join('; ')+(r.jOk?`\nArticulações ativas: ${lista}`:'');
-  navigator.clipboard.writeText(t).then(()=>$('#msg').textContent='Copiado.',()=>$('#msg').textContent='Não foi possível copiar neste navegador.');};
+ $('#copy').onclick=()=>navigator.clipboard.writeText(texto(r)).then(()=>$('#msg').textContent='Copiado.',()=>$('#msg').textContent='Não foi possível copiar neste navegador.');
  $('#rst').onclick=()=>{reset();sync();render();$('#msg').textContent='Formulário limpo.';};
- $('#ex').onclick=()=>{reset();Object.assign(S,{cat:'poli_n',paga:3.5,phga:4,infl:'vhs',vhs:45,on:new Set(['joel_d','joel_e','punh_d','torn_e','ifp2_d','coto_e','quad_d','mtf1_d','ifd3_e','atm_d','ombr_d','subt_d'])});sync();render();$('#msg').textContent='Valores fictícios de exemplo.';};
+ $('#ex').onclick=()=>{reset();Object.assign(S,{cat:'poli',paga:3.5,phga:4,infl:'vhs',vhs:45,on:new Set(['joel_d','joel_e','punh_d','torn_e','ifp2_d','coto_e','quad_d','mtf1_d','ifd3_e','atm_d','ombr_d','subt_d'])});sync();render();$('#msg').textContent='Valores fictícios de exemplo.';};
 };
 /* sincroniza controles com o estado */
 const sync=()=>{
  for(const id of ['paga','phga']){$('#'+id).value=S[id]??0;$('#'+id+'o').textContent=S[id]===null?'–':fmt(S[id]);}
- document.querySelectorAll('input[name=cat]').forEach(e=>e.checked=e.value===S.cat);
+ document.querySelectorAll('[data-cat]').forEach(b=>b.setAttribute('aria-checked',b.dataset.cat===S.cat));
  document.querySelectorAll('input[name=infl]').forEach(e=>e.checked=e.value===S.infl);
  $('#fvhs').hidden=S.infl!=='vhs';$('#fpcr').hidden=S.infl!=='pcr';
  $('#vhs').value=S.vhs===null?'':String(S.vhs).replace('.',',');$('#pcr').value=S.pcr===null?'':String(S.pcr).replace('.',',');$('#un').value=S.un;
@@ -275,14 +296,15 @@ const sync=()=>{
 const toggle=id=>{S.on.has(id)?S.on.delete(id):S.on.add(id);if(S.on.size)S.none=false;sync();render();};
 document.addEventListener('input',e=>{const t=e.target,id=t.id,nm=t.name;
  if(['paga','phga'].includes(id)){S[id]=+t.value;$('#'+id+'o').textContent=fmt(S[id]);}
- else if(nm==='cat')S.cat=t.value;
  else if(nm==='infl'){S.infl=t.value;sync();}
  else if(id==='vhs'||id==='pcr')S[id]=parse(t.value);
  else if(id==='un')S.un=t.value;
+ else if(/^w\d$/.test(nm))S[nm]=t.value==='1';
  else if(t.dataset.jl){toggle(t.dataset.jl);return;}
  render();});
 document.addEventListener('click',e=>{
  const c=e.target.closest('[data-clr]');if(c){S[c.dataset.clr]=null;sync();render();return;}
+ const k=e.target.closest('[data-cat]');if(k){S.cat=k.dataset.cat;sync();render();return;}
  const g=e.target.closest('.j');if(g)toggle(g.dataset.j);});
 document.addEventListener('keydown',e=>{const g=e.target.closest&&e.target.closest('.j');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();toggle(g.dataset.j);}});
 $('#none').onclick=()=>{S.none=!S.none;if(S.none)S.on.clear();sync();render();};
@@ -290,9 +312,5 @@ $('#jclr').onclick=()=>{S.on.clear();S.none=false;sync();render();};
 sync();render();
 }
 </script>
-<footer class="wrap" style="display:block;padding-top:0">
-<p class="src">Tradução livre para o português, sem validação transcultural. Ferramenta de apoio: não substitui o julgamento clínico. Nenhum dado é guardado ou enviado. Avaliações globais em escala de 0 a 10 com passos de 0,5 (escala de 21 círculos, validada como alternativa à linha de 10 cm). Pontos de corte do ACR 2021 apenas para cJADAS-10 e JADAS-10, em oligoartrite e poliartrite FR negativo. <b>Na oligoartrite estendida usam-se os cortes de poliartrite</b>, porque a coorte de poliartrite do estudo incluiu oligoartrite estendida e poliartrite FR negativo. Nas demais categorias, e no JADAS-27 e JADAS-71, o escore é mostrado sem classificação.</p>
-<p class="src">Referências: Consolaro A et al. Arthritis Rheum 2009;61:658–66, JADAS (<a href="https://doi.org/10.1002/art.24516">doi</a>); McErlane F et al. Ann Rheum Dis 2013;72:1983–8, JADAS clínico (<a href="https://doi.org/10.1136/annrheumdis-2012-202031">doi</a>); Nordal EB et al. Ann Rheum Dis 2012;71:1122–7, JADAS com PCR (<a href="https://doi.org/10.1136/annrheumdis-2011-200237">doi</a>); Filocamo G et al. J Rheumatol 2010;37:1534–41, escala de 21 círculos (<a href="https://doi.org/10.3899/jrheum.091474">doi</a>); Trincianti C et al. Arthritis Rheumatol 2021;73:1966–75, pontos de corte ACR 2021 (<a href="https://doi.org/10.1002/art.41879">doi</a>).</p>
-</footer>
 </body>
 </html>
