@@ -100,8 +100,11 @@ details summary{cursor:pointer;font-weight:700;color:var(--vio);min-height:32px}
 .ruler i{display:block;height:100%}
 .mark{position:relative;height:16px}
 .mark b{position:absolute;top:0;width:3px;height:16px;background:var(--ink);border-radius:2px;transform:translateX(-1px);transition:left .3s}
-.ticks{position:relative;height:18px;font-size:13px;color:var(--mut)}
-.ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.bands{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin:2px 0 6px;font-size:13px;line-height:1.25}
+.bands div{border-top:4px solid;padding:4px 4px 3px;border-radius:2px;color:var(--mut)}
+.bands b{display:block;color:var(--ink);font-size:14px;font-variant-numeric:tabular-nums}
+.bands div.cur{background:var(--vio2);color:var(--ink);font-weight:700}
+.bands div.cur b::after{content:" ◂"}
 .others{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 .parts{width:100%;border-collapse:collapse;font-size:15px;margin-top:10px}
 .parts td{padding:4px 0;border-top:1px solid var(--line)}
@@ -257,7 +260,10 @@ const state=(v,c)=>v<=c[0]?0:v<=c[1]?1:v<=c[2]?2:3;
 const fmt=v=>String(r2(v)).replace('.',',');
 const stName=(v,c)=>v===null||!c?'':STATES[state(v,c)][0];
 const chip=(v,c)=>v===null||!c?'':`<span class="chip" style="background:${STATES[state(v,c)][1]}">${STATES[state(v,c)][0]}</span>`;
-const ruler=(c,max,v)=>{const p=x=>x/max*100,seg=[[0,c[0],0],[c[0],c[1],1],[c[1],c[2],2],[c[2],max,3]];return `<div class="ruler">${seg.map(([a,b,i])=>`<i style="width:${p(b-a)}%;background:${STATES[i][1]}"></i>`).join('')}</div><div class="mark">${v===null?'':`<b style="left:${Math.min(100,p(v))}%"></b>`}</div><div class="ticks">${c.map(x=>`<span style="left:${p(x)}%">${fmt(x)}</span>`).join('')}</div>`;};
+const ruler=(c,max,v)=>{const p=x=>x/max*100,seg=[[0,c[0],0],[c[0],c[1],1],[c[1],c[2],2],[c[2],max,3]];return `<div class="ruler">${seg.map(([a,b,i])=>`<i style="width:${p(b-a)}%;background:${STATES[i][1]}"></i>`).join('')}</div><div class="mark">${v===null?'':`<b style="left:${Math.min(100,p(v))}%"></b>`}</div>${bands(c,v)}`;};
+/* faixas por extenso, como na tabela 2 de Trincianti 2021 (ex.: ≤ 2,5 · 2,6–5 · 5,1–16 · > 16) */
+const bands=(c,v)=>{const st=v===null?null:state(v,c),lo=x=>fmt(r2(x+0.1)),rg=[`≤ ${fmt(c[0])}`,`${lo(c[0])}–${fmt(c[1])}`,`${lo(c[1])}–${fmt(c[2])}`,`> ${fmt(c[2])}`],nm=['Inativa','Mínima','Moderada','Alta'];
+ return `<div class="bands">${rg.map((t,i)=>`<div${i===st?' class="cur"':''} style="border-color:${STATES[i][1]}"><b>${t}</b>${nm[i]}</div>`).join('')}</div>`;};
 const block=(name,v,max,c,cls)=>`<div class="score"><span class="${cls}">${v===null?'–':fmt(v)}</span><span><b>${name}</b> <span class="lab">de 0–${max}</span><br>${v===null?'<span class="lab">incompleto</span>':c?chip(v,c):'<span class="lab">escolha o subtipo para classificar</span>'}</span></div>${c?ruler(c,max,v):''}`;
 const texto=r=>{
  const c=cut(),line=(nm,v,cc)=>`${nm}: ${v===null?'incompleto':fmt(v)+(cc?' ('+stName(v,cc)+')':'')}`;
